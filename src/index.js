@@ -9,7 +9,7 @@ const TodoList = () => {
     </ul>
   );
 };
-/asds
+
 const AppHeader = () => <h1>My Todo list</h1>;
 
 const SearchPanel = () => <input placeholder="search" />;
