@@ -1,6 +1,5 @@
 import React from "react";
 
-
 import AppHeader from "../app-header";
 import SearchPanel from "../search-panel/";
 import TodoList from "../todo-list";
@@ -23,11 +22,9 @@ const App = () => {
         <ItemStatusFilter />
       </div>
 
-      <TodoList todos={todoDate} />
+      <TodoList todos={todoDate} onDeleted={id => console.log("del", id)} />
     </div>
   );
 };
-
-
 
 export default App;
