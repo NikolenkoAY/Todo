@@ -1,5 +1,11 @@
 .item-add-form{
+
     margin-top: 15px;
-    float: right;
+    
   
 }
+
+.item-add-form .form-control {
+    flex-grow: 1;
+    margin-right: 10px;
+  }
