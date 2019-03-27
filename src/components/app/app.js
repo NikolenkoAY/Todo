@@ -39,7 +39,6 @@ export default class App extends Component {
   addItem = text => {
     const newItem = this.createTodoItem(text);
     this.setState(({ todoData }) => {
-      console.log({ todoData });
       const newArr = [...todoData, newItem];
       return { todoData: newArr };
     });
@@ -82,7 +81,7 @@ export default class App extends Component {
           onToggleImportant={this.onToggleImportant}
           onToggleDone={this.onToggleDone}
         />
-        <ItemAddForm onItemAdded={this.addItem} />
+        <ItemAddForm onItemAdded={this.addItem} text="text" />
       </div>
     );
   }
