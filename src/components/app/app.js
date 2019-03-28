@@ -47,7 +47,9 @@ export default class App extends Component {
     });
   };
   toggleProperty(todoData, id, propName) {
+
     const idx = todoData.findIndex(el => el.id === id);
+
     const oldItem = todoData[idx];
     const newItem = { ...oldItem, [propName]: !oldItem[propName] };
     return [...todoData.slice(0, idx), newItem, ...todoData.slice(idx + 1)];
@@ -63,6 +65,12 @@ export default class App extends Component {
     });
   };
 
+  onFilterActive = id => {
+    this.setState(({ filter }) => {
+      return { filter: this.toggleProperty(filter, id, "active") };
+    });
+  };
+
   render() {
     const { todoData, filter } = this.state;
     const doneCount = todoData.filter(e => e.done).length;
@@ -73,7 +81,7 @@ export default class App extends Component {
         <AppHeader toDo={todoCount} done={doneCount} />
         <div className="top-panel d-flex">
           <SearchPanel />
-          <ItemStatusFilter filter={filter} />
+          <ItemStatusFilter filter={filter} /*onFilterActive={()=> this.onFilterActive(id)}*/ />
         </div>
 
         <TodoList

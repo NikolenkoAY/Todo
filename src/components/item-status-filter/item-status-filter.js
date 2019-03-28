@@ -1,21 +1,33 @@
 import React, { Component } from "react";
 
-import FilterButton from "./filter-button";
+//import FilterButton from "./filter-button";
 import "./item-status-filter.css";
 
 export default class ItemStatusFilter extends Component {
-  render() {
-    const { filter } = this.props;
 
-    const elements = filter.map(item => {
-      const { id } = item;
+  render() {
+
+    const buttons = this.props.filter.map(item => {
+      const { active, value, id } = item;
+
+      let className = "";
+      if (active) {
+        className = "btn  btn-info";
+      } else {
+        className = "btn  btn-outline-secondary";
+      }
+
       return (
         <div className="btn-group" key={id}>
-          <FilterButton {...item} />
+          <button type="button"  className={className} onClick={this.props.onFilterActive}>
+            {value}
+          </button>
+
         </div>
       );
     });
-    return <div className="btn-group">{elements}</div>;
+
+    return <div className="btn-group">{buttons}</div>;
   }
 }
 
@@ -31,4 +43,8 @@ export default class ItemStatusFilter extends Component {
         </button>
         <button type="button" id="3" className="btn btn-outline-secondary">
           Done
-        </button> */
+        </button>
+
+
+                  <FilterButton {...item} />
+        */
