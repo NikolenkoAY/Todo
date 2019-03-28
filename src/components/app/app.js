@@ -32,6 +32,14 @@ export default class App extends Component {
       id: this.maxId++
     };
   }
+  toggleProperty(todoData, id, propName) {
+    const idx = todoData.findIndex(el => el.id === id);
+
+    const oldItem = todoData[idx];
+    const newItem = { ...oldItem, [propName]: !oldItem[propName] };
+    return [...todoData.slice(0, idx), newItem, ...todoData.slice(idx + 1)];
+  }
+
   deleteItem = id => {
     this.setState(({ todoData }) => {
       const idx = todoData.findIndex(el => el.id === id);
@@ -46,14 +54,7 @@ export default class App extends Component {
       return { todoData: newArr };
     });
   };
-  toggleProperty(todoData, id, propName) {
 
-    const idx = todoData.findIndex(el => el.id === id);
-
-    const oldItem = todoData[idx];
-    const newItem = { ...oldItem, [propName]: !oldItem[propName] };
-    return [...todoData.slice(0, idx), newItem, ...todoData.slice(idx + 1)];
-  }
   onToggleImportant = id => {
     this.setState(({ todoData }) => {
       return { todoData: this.toggleProperty(todoData, id, "important") };
@@ -65,9 +66,24 @@ export default class App extends Component {
     });
   };
 
+  cleanArray = () => {
+    const ar = this.state.filter;
+    const cleanArray = ar.map(e => (e = { ...e, active: false }));
+    this.setState(() => {
+      return { filter: cleanArray };
+    });
+  };
   onFilterActive = id => {
-    this.setState(({ filter }) => {
-      return { filter: this.toggleProperty(filter, id, "active") };
+    const { filter } = this.state;
+    const idx = filter.findIndex(el => el.id === id);
+
+    const oldItem = filter[idx];
+    const newItem = { ...oldItem, active: true };
+
+    const newArr = [...filter.slice(0, idx), newItem, ...filter.slice(idx + 1)];
+
+    this.setState(() => {
+      return { filter: newArr };
     });
   };
 
@@ -81,7 +97,10 @@ export default class App extends Component {
         <AppHeader toDo={todoCount} done={doneCount} />
         <div className="top-panel d-flex">
           <SearchPanel />
-          <ItemStatusFilter filter={filter} /*onFilterActive={()=> this.onFilterActive(id)}*/ />
+          <ItemStatusFilter
+            filter={filter}
+            onFilterActive={this.onFilterActive}
+          />
         </div>
 
         <TodoList

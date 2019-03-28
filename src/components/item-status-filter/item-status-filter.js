@@ -4,9 +4,7 @@ import React, { Component } from "react";
 import "./item-status-filter.css";
 
 export default class ItemStatusFilter extends Component {
-
   render() {
-
     const buttons = this.props.filter.map(item => {
       const { active, value, id } = item;
 
@@ -19,10 +17,13 @@ export default class ItemStatusFilter extends Component {
 
       return (
         <div className="btn-group" key={id}>
-          <button type="button"  className={className} onClick={this.props.onFilterActive}>
+          <button
+            type="button"
+            className={className}
+            onClick={() => this.props.onFilterActive(id)}
+          >
             {value}
           </button>
-
         </div>
       );
     });
