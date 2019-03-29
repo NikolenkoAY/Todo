@@ -54,7 +54,6 @@ export default class App extends Component {
       return { todoData: newArr };
     });
   };
-
   onToggleImportant = id => {
     this.setState(({ todoData }) => {
       return { todoData: this.toggleProperty(todoData, id, "important") };
@@ -64,27 +63,30 @@ export default class App extends Component {
     this.setState(({ todoData }) => {
       return { todoData: this.toggleProperty(todoData, id, "done") };
     });
+   
   };
 
-  cleanArray = () => {
-    const ar = this.state.filter;
-    const cleanArray = ar.map(e => (e = { ...e, active: false }));
-    this.setState(() => {
+  toCleanArray = () => {
+    this.setState(({filter}) => {
+    const dirtyArray = filter;
+    const cleanArray = dirtyArray.map(e => (e = { ...e, active: false }));
       return { filter: cleanArray };
     });
+    
   };
   onFilterActive = id => {
-    const { filter } = this.state;
-    const idx = filter.findIndex(el => el.id === id);
+    this.toCleanArray();
 
+    this.setState(({filter}) => {
+    const idx = filter.findIndex(el => el.id === id);
     const oldItem = filter[idx];
     const newItem = { ...oldItem, active: true };
-
     const newArr = [...filter.slice(0, idx), newItem, ...filter.slice(idx + 1)];
-
-    this.setState(() => {
       return { filter: newArr };
     });
+   
+
+
   };
 
   render() {
