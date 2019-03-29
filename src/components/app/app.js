@@ -15,7 +15,13 @@ export default class App extends Component {
     todoData: [
       this.createTodoItem("Drink Coffe"),
       this.createTodoItem("Learn React"),
-      this.createTodoItem("Build App")
+      this.createTodoItem("Build App"),
+      {
+        label: "test",
+        important: false,
+        done: true,
+        id: this.maxId++
+      }
     ],
     filter: [
       { active: true, value: "All", id: 0 },
@@ -63,31 +69,30 @@ export default class App extends Component {
     this.setState(({ todoData }) => {
       return { todoData: this.toggleProperty(todoData, id, "done") };
     });
-   
+
   };
 
   toCleanArray = () => {
-    this.setState(({filter}) => {
-    const dirtyArray = filter;
-    const cleanArray = dirtyArray.map(e => (e = { ...e, active: false }));
+    this.setState(({ filter }) => {
+      const dirtyArray = filter;
+      const cleanArray = dirtyArray.map(e => (e = { ...e, active: false }));
       return { filter: cleanArray };
     });
-    
+
   };
   onFilterActive = id => {
     this.toCleanArray();
-
-    this.setState(({filter}) => {
-    const idx = filter.findIndex(el => el.id === id);
-    const oldItem = filter[idx];
-    const newItem = { ...oldItem, active: true };
-    const newArr = [...filter.slice(0, idx), newItem, ...filter.slice(idx + 1)];
+    this.setState(({ filter }) => {
+      const idx = filter.findIndex(el => el.id === id);
+      const oldItem = filter[idx];
+      const newItem = { ...oldItem, active: true };
+      const newArr = [...filter.slice(0, idx), newItem, ...filter.slice(idx + 1)];
       return { filter: newArr };
     });
-   
-
-
   };
+
+
+
 
   render() {
     const { todoData, filter } = this.state;
@@ -110,6 +115,7 @@ export default class App extends Component {
           onDeleted={this.deleteItem}
           onToggleImportant={this.onToggleImportant}
           onToggleDone={this.onToggleDone}
+          filter={filter}
         />
         <ItemAddForm onItemAdded={this.addItem} text="text" />
       </div>
