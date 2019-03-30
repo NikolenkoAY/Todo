@@ -3,8 +3,13 @@ import React, { Component } from "react";
 import "./search-panel.css";
 
 export default class SearchPanel extends Component {
+  state = {
+    searchQuery: ""
+  };
+
   onLabelChange = e => {
-    this.props.enterTerm(e.target.value);
+    this.setState({ searchQuery: e.target.value });
+    this.props.onSearchChange(e.target.value);
   };
 
   render() {
@@ -14,6 +19,7 @@ export default class SearchPanel extends Component {
         className="form-control search-input"
         placeholder="Type to search"
         onChange={this.onLabelChange}
+        value={this.state.label}
       />
     );
   }
